@@ -9,19 +9,9 @@ from scapy.all import ShortField, IntField, LongField, BitField, FieldListField,
 from scapy.all import IP, UDP, TCP, Raw, ls
 from scapy.layers.inet import _IPOption_HDR
 
-# class CpuHeader(Packet):
-#     name = 'CpuPacket'
-#     fields_desc = [BitField("device_id",0,16), BitField('reason',0,16), BitField('counter', 0, 80)]
-#
-# bind_layers(CpuHeader, Ether)
-
 def handle_pkt(pkt):
     print "Controller got a packet"
-    # p = CpuHeader(str(pkt))
-    # print str(pkt)
-    # if p.reason == 200:
-    #     p.show()
-    # sys.stdout.flush()
+    sys.stdout.flush()
     try:
         print str(bytes(pkt[TCP].payload))
     except Exception:
