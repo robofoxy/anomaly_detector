@@ -26,7 +26,10 @@ def import_dataset(data_file):
 				elif isfloat(feature):
 					feature = float(feature)
 				row.append(feature)
+			
 			row[len(row) - 1] = row[len(row) - 1][0 : len(row[len(row) - 1]) - 2]
+			if row[len(row) - 1] != "normal":
+				row[len(row) - 1] = "anomalous"
 			dataset.append(row)
 		return dataset
 		
