@@ -31,7 +31,20 @@ def import_dataset(data_file):
 			if row[len(row) - 1] != "normal":
 				row[len(row) - 1] = "anomalous"
 			dataset.append(row)
-		return dataset
+		return np.array(dataset)
 		
-						
+def fetch_training_data():
+	dataset = import_dataset(training_file)
+	#print dataset.shape
+	return dataset[:, 0:len(dataset[0])-1], dataset[:, len(dataset[0])-1:len(dataset[0])]
+
+def fetch_test_data():
+	dataset = import_dataset(test_file)
+	#print dataset.shape
+	return dataset[:, 0:len(dataset[0])-1], dataset[:, len(dataset[0])-1:len(dataset[0])]
+
 #import_data("../data/test.txt")
+#train_x, train_y = fetch_training_data()
+#print train_x.shape
+#print train_y.shape
+
