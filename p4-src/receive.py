@@ -22,9 +22,10 @@ def main():
         iface = 's1-cpu-eth1'
     else:
         iface = sys.argv[1]
+    ifaces = ["s1-cpu-eth1", "s1-eth1"]
 
     print "sniffing on %s" % iface
     sys.stdout.flush()
-    sniff(iface = iface, prn = lambda x: handle_pkt(x))
+    sniff(iface = ifaces, prn = lambda x: handle_pkt(x))
 if __name__ == '__main__':
     main()
