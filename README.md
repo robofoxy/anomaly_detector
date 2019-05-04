@@ -6,4 +6,3 @@
 
 * Python 2.7.x
 * [Scikit-learn tool](http://scikit-learn.org/stable/)
-* Mongodb
