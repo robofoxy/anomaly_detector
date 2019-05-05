@@ -2,6 +2,7 @@ from import_data import *
 from sklearn import tree
 from sklearn.metrics import f1_score
 from sklearn import preprocessing
+import pickle
 
 print "preprocessing is starting!"
 #training_dataset = import_dataset(training_file)
@@ -33,9 +34,13 @@ if __name__=='__main__':
 	clf = clf.fit(train_x, train_y)
 	print "training is done!"
 	prediction = clf.predict(test_x)
+	print "Testing is done!"
 	print ""
 	print "Accuracy =", evaluate_tree(prediction, test_y, le)
 	print "F1-Score =", f1_score(test_y, prediction, average='macro' )
 	tree.export_graphviz(clf, out_file='tree.dot', feature_names=attribute_list[ : len(attribute_list)-1])
-	
+	pickle.dump(clf, open('tree_model.sav', 'wb'))
+
+	# for import model:
+	# clf = pickle.load(open(filename, 'rb'))
 
