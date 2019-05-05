@@ -3,25 +3,46 @@ import sys
 import struct
 import os
 
+import pickle
+
 from scapy.all import sniff, sendp, hexdump, get_if_list, get_if_hwaddr, bind_layers
 from scapy.all import Packet, IPOption, Ether
 from scapy.all import ShortField, IntField, LongField, BitField, FieldListField, FieldLenField
 from scapy.all import IP, UDP, TCP, Raw, ls
 from scapy.layers.inet import _IPOption_HDR
 
-def handle_pkt(pkt):
-    print "Controller got a packet"
+sys.path.append('../')
+from scripts.import_data import *
+
+
+def handle_pkt(pkt, clf):
+    # print "Controller got a packet"
     sys.stdout.flush()
     try:
-        print str(bytes(pkt[TCP].payload))
+        pkt_features = str(bytes(pkt[TCP].payload))
+        if pkt_features:
+            # print pkt_features
+            test_x = encode_feature_vector(pkt_features)
+            # print len(test_x)
+            # print np.array([test_x]).shape
+            # print test_x
+            prediction = clf.predict(np.array([test_x]))
+            print decode_label(prediction), prediction
+
     except Exception as e:
         print e
 
 def main():
+    if len(sys.argv) < 2:
+        print "usage: ./" +  sys.argv[0] + " <trainedModelDumpPath>"
+        exit(1)
 
+    # Load from file
+    clf = pickle.load(open(sys.argv[1], 'rb'))
+    print clf
     ifaces = ["s1-cpu-eth1", "s1-eth1"]
     sys.stdout.flush()
-    sniff(iface = ifaces, prn = lambda x: handle_pkt(x))
-    
+    sniff(iface = ifaces, prn = lambda x: handle_pkt(x, clf))
+
 if __name__ == '__main__':
     main()

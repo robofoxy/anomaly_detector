@@ -16,17 +16,17 @@ def isfloat(value):
             return False
 
 def write_set(string_set):
-	with open('string_set.txt', 'w') as filehandle:  
+	with open('../scripts/string_set.txt', 'w') as filehandle:
 		filehandle.writelines("%s\n" % item for item in string_set)
-		
+
 def read_set():
-	with open('string_set.txt', 'r') as filehandle:  
+	with open('../scripts/string_set.txt', 'r') as filehandle:  
 		filecontents = filehandle.readlines()
 		string_set = []
 		for line in filecontents:
 			item = line[:-1]
 			string_set.append(item)
-			
+
 		return string_set
 
 sset = read_set()
@@ -41,13 +41,13 @@ def encode_feature_vector(vector_string):
 		if (not vector[i].isdigit()) and (not isfloat(vector[i])):
 			vector[i] = str(le.transform([vector[i]])[0])
 	return vector
-	
+
 def decode_label(label_arr):
 	le = preprocessing.LabelEncoder()
 	le.fit(sset)
-	
+
 	return le.inverse_transform([int(label_arr[0])])[0]
-    
+
 def import_dataset(data_file):
 	with open(data_file) as f:
 		lines = f.readlines()
@@ -64,7 +64,7 @@ def import_dataset(data_file):
 					feature = float(feature)
 				row.append(feature)
 			row[len(row) - 1] = row[len(row) - 1][0 : len(row[len(row) - 1]) - 2]
-			
+
 			if row[len(row) - 1] != "normal":
 				row[len(row) - 1] = "anomalous"
 
@@ -84,7 +84,7 @@ def prepare_encoder(dataset_train, dataset_test):
 	rows_test = dataset_test.shape[0]
 	cols_test = dataset_test.shape[1]
 	print "preparing encoder..."
-	
+
 	print "---- checking TRAINING dataset ----"
 	for i in range(rows_train):
 		if i%100000 == 0:
@@ -100,7 +100,7 @@ def prepare_encoder(dataset_train, dataset_test):
 		for j in range(cols_test):
 			if (not dataset_test[i][j].isdigit()) and (not isfloat(dataset_test[i][j])):
 				string_set.add(dataset_test[i][j])
-	
+
 #	print string_set
 	le = preprocessing.LabelEncoder()
 	le.fit(list(string_set))
@@ -113,7 +113,7 @@ def encode_data(dataset_train, dataset_test):
 	cols_train = dataset_train.shape[1]
 	rows_test = dataset_test.shape[0]
 	cols_test = dataset_test.shape[1]
-	
+
 	print "---- modifying TRAINING dataset ----"
 	for i in range(rows_train):
 		if i%100000 == 0:
@@ -129,12 +129,12 @@ def encode_data(dataset_train, dataset_test):
 		for j in range(cols_test):
 			if (not dataset_test[i][j].isdigit()) and (not isfloat(dataset_test[i][j])):
 				dataset_test[i][j] = str(le.transform([dataset_test[i][j]])[0])
-				
+
 	return dataset_train, dataset_test, le
-		
+
 def fetch_training_testing_data():
 	dataset_train, dataset_test, le = encode_data(import_dataset(training_file), import_dataset(test_file))
-	
+
 	#print dataset.shape
 	return dataset_train[:, 0:len(dataset_train[0])-1], dataset_train[:, len(dataset_train[0])-1:len(dataset_train[0])], dataset_test[:, 0:len(dataset_test[0])-1], dataset_test[:, len(dataset_test[0])-1:len(dataset_test[0])], le
 

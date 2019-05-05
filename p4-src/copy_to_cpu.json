@@ -754,7 +754,7 @@
       ["standard_metadata", "recirculate_flag"]
     ]
   ],
-  "program" : "/home/p4/p4-learning/examples/networkSecurity/copy_to_cpu.p4i",
+  "program" : "/home/p4/p4-learning/examples/anomaly_detector/p4-src/copy_to_cpu.p4i",
   "__meta__" : {
     "version" : [2, 18],
     "compiler" : "https://github.com/p4lang/p4c"
