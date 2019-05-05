@@ -14,18 +14,14 @@ def handle_pkt(pkt):
     sys.stdout.flush()
     try:
         print str(bytes(pkt[TCP].payload))
-    except Exception:
-        pass
+    except Exception as e:
+        print e
 
 def main():
-    if len(sys.argv) < 2:
-        iface = 's1-cpu-eth1'
-    else:
-        iface = sys.argv[1]
-    ifaces = ["s1-cpu-eth1", "s1-eth1"]
 
-    print "sniffing on %s" % iface
+    ifaces = ["s1-cpu-eth1", "s1-eth1"]
     sys.stdout.flush()
     sniff(iface = ifaces, prn = lambda x: handle_pkt(x))
+    
 if __name__ == '__main__':
     main()
