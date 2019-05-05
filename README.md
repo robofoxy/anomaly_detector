@@ -6,3 +6,4 @@
 
 * Python 2.7.x
 * [Scikit-learn tool](http://scikit-learn.org/stable/)
+* p4 (https://github.com/nsg-ethz/p4-learning)
