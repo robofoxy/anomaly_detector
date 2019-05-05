@@ -21,7 +21,7 @@ if __name__=='__main__':
 
 	train_x, train_y, test_x, test_y, le = fetch_training_testing_data()
 	
-	clf = svm.SVC(C=0.225, cache_size=400, class_weight=None, coef0=0.0, decision_function_shape='ovr', degree=2, gamma=2.8, kernel='rbf', max_iter=-1, probability=False, random_state=None, shrinking=True, verbose=False,tol=0.0147)
+	clf = svm.SVC(C= 1.0, cache_size=200, class_weight=None, coef0=0.0, decision_function_shape='ovr', degree=2, gamma='scale', kernel='rbf', max_iter=-1, probability=False, random_state=None, shrinking=True, verbose=False,tol=0.001)
 	
 	clf.fit(train_x,train_y)
 	

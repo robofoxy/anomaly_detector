@@ -33,6 +33,9 @@ if __name__=='__main__':
 	print "ready to train!"
 	clf = clf.fit(train_x, train_y)
 	print "training is done!"
+	print type(test_x)
+	print test_x.shape
+	print test_x
 	prediction = clf.predict(test_x)
 	print "Testing is done!"
 	print ""

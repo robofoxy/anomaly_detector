@@ -42,11 +42,11 @@ def encode_feature_vector(vector_string):
 			vector[i] = str(le.transform([vector[i]])[0])
 	return vector
 	
-def decode_label(label):
+def decode_label(label_arr):
 	le = preprocessing.LabelEncoder()
 	le.fit(sset)
 	
-	return le.inverse_transform([int(label)])[0]
+	return le.inverse_transform([int(label_arr[0])])[0]
     
 def import_dataset(data_file):
 	with open(data_file) as f:
@@ -144,4 +144,4 @@ def fetch_training_testing_data():
 #print train_x.shape
 #print train_y.shape
 #print encode_feature_vector("anomalous,normal,3.14.")
-#print decode_label('14')
+#print decode_label(['14'])
