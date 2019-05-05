@@ -31,7 +31,10 @@ def read_set():
 
 sset = read_set()
 
-def encode_feature_vector(vector):
+def encode_feature_vector(vector_string):
+	vector = line.split(',')
+	vector = vector[:len(vector) - 1]
+
 	le = preprocessing.LabelEncoder()
 	le.fit(sset)
 	for i in range(0, len(vector)):
