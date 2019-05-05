@@ -25,16 +25,17 @@ if __name__=='__main__':
 
 	train_x, train_y, test_x, test_y, le = fetch_training_testing_data()
 
-	while(True):
-		clf = tree.DecisionTreeClassifier(criterion="gini", min_samples_split=50, class_weight="balanced")
-		#clf = tree.DecisionTreeClassifier(criterion='gini', splitter='best', max_depth=None, min_samples_split=0.35, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_features='log2', random_state=None, max_leaf_nodes=None, min_impurity_decrease=0.0, min_impurity_split=None, class_weight=None, presort=False)
-		
-		print "preprocessing is done!"
-		print "ready to train!"
-		clf = clf.fit(train_x, train_y)
-		print "training is done!"
-		arr = clf.predict(test_x)
-		cur = evaluate_tree(arr, test_y, le)
-		print "Accuracy:", cur
-		break
-		
+
+	clf = tree.DecisionTreeClassifier(criterion='entropy', splitter='best', max_depth=None, min_samples_split=40, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_features='log2', random_state=None, max_leaf_nodes=None, min_impurity_decrease=0.0, min_impurity_split=None, class_weight=None, presort=False)
+	
+	print "preprocessing is done!"
+	print "ready to train!"
+	clf = clf.fit(train_x, train_y)
+	print "training is done!"
+	prediction = clf.predict(test_x)
+	print ""
+	print "Accuracy =", evaluate_tree(prediction, test_y, le)
+	print "F1-Score =", f1_score(test_y, prediction, average='macro' )
+	tree.export_graphviz(clf, out_file='tree.dot', feature_names=attribute_list[ : len(attribute_list)-1])
+	
+
