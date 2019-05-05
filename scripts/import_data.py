@@ -32,7 +32,7 @@ def read_set():
 sset = read_set()
 
 def encode_feature_vector(vector_string):
-	vector = line.split(',')
+	vector = vector_string.split(',')
 	vector = vector[:len(vector) - 1]
 
 	le = preprocessing.LabelEncoder()
@@ -137,4 +137,4 @@ def fetch_training_testing_data():
 #train_x, train_y,test_x, test_y = fetch_training_testing_data():()
 #print train_x.shape
 #print train_y.shape
-#print encode_feature_vector(["anomalous", "normal", "3.14"])
+print encode_feature_vector("anomalous,normal,3.14.")
