@@ -6,6 +6,8 @@ attribute_list = ['duration', 'protocol_type', 'service', 'flag', 'src_bytes', '
 training_file = "../data/training.txt"
 test_file = "../data/test.txt"
 
+
+
 def isfloat(value):
         try:
             float(value)
@@ -13,6 +15,30 @@ def isfloat(value):
         except ValueError:
             return False
 
+def write_set(string_set):
+	with open('string_set.txt', 'w') as filehandle:  
+		filehandle.writelines("%s\n" % item for item in string_set)
+		
+def read_set():
+	with open('string_set.txt', 'r') as filehandle:  
+		filecontents = filehandle.readlines()
+		string_set = []
+		for line in filecontents:
+			item = line[:-1]
+			string_set.append(item)
+			
+		return string_set
+
+sset = read_set()
+
+def encode_feature_vector(vector):
+	le = preprocessing.LabelEncoder()
+	le.fit(sset)
+	for i in range(0, len(vector)):
+		if (not vector[i].isdigit()) and (not isfloat(vector[i])):
+			vector[i] = str(le.transform([vector[i]])[0])
+	return vector
+    
 def import_dataset(data_file):
 	with open(data_file) as f:
 		lines = f.readlines()
@@ -69,6 +95,7 @@ def prepare_encoder(dataset_train, dataset_test):
 #	print string_set
 	le = preprocessing.LabelEncoder()
 	le.fit(list(string_set))
+	#write_set(list(string_set))
 	return le
 
 def encode_data(dataset_train, dataset_test):
@@ -107,4 +134,4 @@ def fetch_training_testing_data():
 #train_x, train_y,test_x, test_y = fetch_training_testing_data():()
 #print train_x.shape
 #print train_y.shape
-
+#print encode_feature_vector(["anomalous", "normal", "3.14"])
