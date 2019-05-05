@@ -45,8 +45,6 @@ def encode_feature_vector(vector_string):
 def decode_label(label_arr):
 	le = preprocessing.LabelEncoder()
 	le.fit(sset)
-	print label_arr
-	print label_arr[0]
 	if le.inverse_transform([int(label_arr[0])])[0] != "normal":
 		return "anomalous"
 	else:
