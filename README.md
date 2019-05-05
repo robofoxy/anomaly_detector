@@ -20,6 +20,26 @@ dot -Tpng tree.dot -o ../docs/tree_CRITERION_MINSAMPLESSPLIT_CLASSWEIGHT.png
 
 * To import model:
 
-```sh
+```python
 clf = pickle.load(open(filename, 'rb'))
+```
+
+
+### Running Topology
+
+```bash
+cd p4-src
+sudo p4run        # this will open the mininet
+xterm h1 h2 s1    # this will open terminal for hosts and the switch
+```
+
+```bash
+# on s1
+./receive.py <model_file_path>    # pre-trained ml model starts to predict packets
+                                  # passes over switch
+```
+
+```bash
+# on h1
+./send.py 10.0.1.2 <input_path>   # input will be send line by line
 ```
