@@ -41,6 +41,12 @@ def encode_feature_vector(vector_string):
 		if (not vector[i].isdigit()) and (not isfloat(vector[i])):
 			vector[i] = str(le.transform([vector[i]])[0])
 	return vector
+	
+def decode_label(label):
+	le = preprocessing.LabelEncoder()
+	le.fit(sset)
+	
+	return le.inverse_transform([int(label)])[0]
     
 def import_dataset(data_file):
 	with open(data_file) as f:
@@ -137,4 +143,5 @@ def fetch_training_testing_data():
 #train_x, train_y,test_x, test_y = fetch_training_testing_data():()
 #print train_x.shape
 #print train_y.shape
-print encode_feature_vector("anomalous,normal,3.14.")
+#print encode_feature_vector("anomalous,normal,3.14.")
+#print decode_label('14')
