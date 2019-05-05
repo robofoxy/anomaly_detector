@@ -17,3 +17,9 @@
 pyton dec_tree.py
 dot -Tpng tree.dot -o ../docs/tree_CRITERION_MINSAMPLESSPLIT_CLASSWEIGHT.png
 ```
+
+* To import model:
+
+```sh
+clf = pickle.load(open(filename, 'rb'))
+```
