@@ -14,21 +14,21 @@ from scapy.layers.inet import _IPOption_HDR
 sys.path.append('../')
 from scripts.import_data import *
 
-
+i = 0
 def handle_pkt(pkt, clf):
     # print "Controller got a packet"
-    sys.stdout.flush()
+    # sys.stdout.flush()
+    global i
     try:
         pkt_features = str(bytes(pkt[TCP].payload))
         if pkt_features:
-            # print pkt_features
             test_x = encode_feature_vector(pkt_features)
-            # print len(test_x)
-            # print np.array([test_x]).shape
+            test_y = pkt_features.split(",")[-1]
+            # print pkt_features
             # print test_x
             prediction = clf.predict(np.array([test_x]))
-            print decode_label(prediction), prediction
-
+            print i, decode_label(prediction), prediction , "actual label:" , test_y
+            i+=1
     except Exception as e:
         print e
 
